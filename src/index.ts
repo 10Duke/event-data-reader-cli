@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import program from 'commander';
 
 import { Options } from './options';
+import { readKey, createToken } from './token';
 
 const appPackage = require('../package.json');
 
@@ -20,7 +21,8 @@ program
     })
     .option('-a, --after <after>', 'timestamp from which events are requested, in nanoseconds since the Epoch')
     .option('-b, --before <before>', 'timestamp until which events are requested, in nanoseconds since the Epoch')
-    .option('-m, --max-event-count <maxEventCount>', 'maximum number of events to return')
+    .requiredOption('-k, --key <privateKeyFile>', 'private key file')
+    .option('-m, --max-event-count <maxEventCount>', 'maximum number of events to return', '1000')
     .option('-n, --newest', 'instruct to return newest events in case that number of events returned is limited by --max-event-count')
     .option('-x, --max-rounds <maxRounds>', 'maximum number of requests to send in order to get all events between --after and --before', '1')
     .option('-d, --debug', 'output debug info (default: no debug output)')
@@ -39,6 +41,7 @@ const options = {
     debug: program.debug !== undefined,
     getEndpointUrl,
     feed,
+    privateKeyFile: program.key,
     after: program.after,
     before: program.before,
     maxEventCount: program.maxEventCount,
@@ -49,4 +52,7 @@ const options = {
 if (options.debug) {
     console.log(chalk.gray(JSON.stringify(options)));
 }
+
+const key = readKey(options.privateKeyFile);
+const token = createToken(options.feed, key);
 
