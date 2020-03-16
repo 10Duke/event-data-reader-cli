@@ -1,0 +1,23 @@
+stages:
+ - build
+ - deploy
+
+variables:
+ NPM_VERSION: ""
+
+before_script:
+  - eval export NPM_VERSION=$(node -p -e "require('./package.json').version")
+
+build:
+ stage: build
+ script:
+   - 'npm install'
+   - 'npm run build'
+
+deploy:
+ stage: deploy
+ script:
+   - echo ${NPM_VERSION}
+   - '[[ ! ${NPM_VERSION} =~ .*-SNAPSHOT.* ]] && npm publish || exit 1'
+ only:
+   - master

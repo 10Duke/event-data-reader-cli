@@ -1,0 +1,41 @@
+{
+  "name": "@10duke/event-data-reader-cli",
+  "version": "0.0.1",
+  "description": "Command line tool for reading event data from 10Duke Event Data service",
+  "main": "./lib/index.js",
+  "bin": {
+    "event-data-reader": "./lib/index.js"
+  },
+  "scripts": {
+    "start": "nodemon --watch 'src/**/*.ts' src/index.ts",
+    "event-data-reader": "node ./node_modules/ts-node/dist/bin.js src/index.ts",
+    "create": "npm run build && npm run test",
+    "build": "tsc -p .",
+    "test": "sudo npm i -g && event-data-reader",
+    "refresh": "rm -rf ./node_modules ./package-lock.json && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@king.10duke.com:Events/EventDataReader.git"
+  },
+  "publishConfig": {
+    "registry": "http://king:8083/repository/npm-internal/"
+  },
+  "keywords": [
+    "10Duke",
+    "Event Data",
+    "cli"
+  ],
+  "author": "jarkko",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.8",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
+  }
+}
