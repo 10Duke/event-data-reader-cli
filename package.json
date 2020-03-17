@@ -29,6 +29,8 @@
   "author": "jarkko",
   "license": "ISC",
   "dependencies": {
+    "@types/bent": "^7.0.1",
+    "bent": "^7.1.1",
     "chalk": "^3.0.0",
     "commander": "^5.0.0",
     "jose": "^1.25.0"
