@@ -6,6 +6,12 @@ import chalk from 'chalk';
 import { Options } from './options';
 import { URL } from 'url';
 
+function sleep(ms: number): Promise<void> {
+    return new Promise(resolve => {
+      setTimeout(resolve,ms);
+    });
+}
+
 function buildFeedUrl(options: Options): URL {
     let url = options.getEndpointUrl;
     if (!url.endsWith('/')) {
@@ -120,6 +126,11 @@ function findNewerInstruction(eventsResponse: string, eventsEndIndex: number): a
 async function readEventsWithRetries(getFunc: () => Promise<string>, maxRetries: number): Promise<string> {
     let failedCount = 0;
     do {
+        if (failedCount > 0) {
+            const sleepSecs = Math.pow(2, failedCount - 1);
+            console.log(chalk.red(`retry ${failedCount} after ${sleepSecs} second(s)`));
+            await sleep(sleepSecs * 1000);
+        }
         try {
             return await getFunc();
         } catch (e) {
