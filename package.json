@@ -16,10 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@king.10duke.com:Events/EventDataReader.git"
-  },
-  "publishConfig": {
-    "registry": "http://king:8083/repository/npm-internal/"
+    "url": "git@github.com:10Duke/event-data-reader-cli.git"
   },
   "keywords": [
     "10Duke",
