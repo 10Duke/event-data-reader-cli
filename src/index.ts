@@ -14,7 +14,7 @@ let getEndpointUrl: string | undefined = undefined;
 let feed: string | undefined = undefined;
 program
     .name('event-data-reader')
-    .description('Command line tool for reading event data from 10Duke Event Data service.')
+    .description('Command line tool for reading event data from 10Duke Event Data service. Retrieves event data internally in chunks and writes a single JSON array with all retrieved events.')
     .version(appPackage.version)
     .arguments('<getEndpointUrl> <feed>')
     .action((getEndpointUrlArg, feedArg) =>  {
@@ -26,10 +26,16 @@ program
     .requiredOption('-k, --key <privateKeyFile>', 'private key file, used for building authorization token')
     .option('-m, --max-event-count <maxEventCount>', 'maximum number of events to return per request', '500')
 //    .option('-n, --newest', 'instruct to return newest events in case that number of events returned is limited by --max-event-count')
-    .option('-x, --max-rounds <maxRounds>', 'maximum number of requests to send in order to get all events between --after and --before, or -1 for unlimited / until all retrieved', '1')
-    .option('-r, --max-retries <maxRetries>', 'maximum number of retries if a request fails', '1')
+    .option('-x, --max-rounds <maxRounds>', 'maximum number of requests to send in order to get all events between --after and --before, or -1 for unlimited / until all retrieved', '-1')
+    .option('-r, --max-retries <maxRetries>', 'maximum number of retries if a request fails', '5')
     .option('-o, --output <filePath>', 'File for writing events received from the server. If not specified, writes to stdout.')
     .option('-d, --debug', 'output debug info (default: no debug output)')
+    .on('--help', () => {
+      console.log('');
+      console.log('Example call:');
+      console.log('  $ event-data-reader https://acme.events.10duke.com/get acme-idp -k acme.private.pem -a 2020-02-15 -b 2020-02-16T12:00:00.000Z -o acme-events.json');
+      console.log('');
+    })
     .parse(process.argv);
 
 if (!getEndpointUrl) {
