@@ -6,6 +6,7 @@ import program from 'commander';
 import { Options } from './options';
 import { readEvents } from './request';
 import { readKey, createToken } from './token';
+import { parseDateTime } from './util';
 
 const appPackage = require('../package.json');
 
@@ -20,8 +21,8 @@ program
         getEndpointUrl = getEndpointUrlArg;
         feed = feedArg;
     })
-    .option('-a, --after <after>', 'Timestamp from which events are requested, in nanoseconds since the Epoch. If not specified, reading starts from the oldest event.')
-    .option('-b, --before <before>', 'Timestamp until which events are requested, in nanoseconds since the Epoch. If not specified, reads until no newer events available.')
+    .option('-a, --after <after>', 'Timestamp from which events are requested, in nanoseconds since the Epoch or as a parseable datetime string (ISO 8601). If not specified, reading starts from the oldest event.')
+    .option('-b, --before <before>', 'Timestamp until which events are requested, in nanoseconds since the Epoch or as a parseable datetime string (ISO 8601). If not specified, reads until no newer events available.')
     .requiredOption('-k, --key <privateKeyFile>', 'private key file, used for building authorization token')
     .option('-m, --max-event-count <maxEventCount>', 'maximum number of events to return per request', '500')
 //    .option('-n, --newest', 'instruct to return newest events in case that number of events returned is limited by --max-event-count')
@@ -45,8 +46,8 @@ const options = {
     getEndpointUrl,
     feed,
     privateKeyFile: program.key,
-    after: program.after,
-    before: program.before,
+    after: parseDateTime(program.after),
+    before: parseDateTime(program.before),
     maxEventCount: program.maxEventCount,
     newest: program.newest !== undefined,
     maxRounds: Number.parseInt(program.maxRounds),
