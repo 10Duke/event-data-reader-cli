@@ -8,6 +8,6 @@ export interface Options {
     newest: boolean;
     maxRounds: number;
     debug: boolean;
-    outputFile?: string;,
+    outputFile?: string;
     maxRetries: number;
 }

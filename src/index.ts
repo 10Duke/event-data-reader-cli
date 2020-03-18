@@ -20,14 +20,14 @@ program
         getEndpointUrl = getEndpointUrlArg;
         feed = feedArg;
     })
-    .option('-a, --after <after>', 'timestamp from which events are requested, in nanoseconds since the Epoch')
-    .option('-b, --before <before>', 'timestamp until which events are requested, in nanoseconds since the Epoch')
-    .requiredOption('-k, --key <privateKeyFile>', 'private key file')
-    .option('-m, --max-event-count <maxEventCount>', 'maximum number of events to return', '1000')
+    .option('-a, --after <after>', 'Timestamp from which events are requested, in nanoseconds since the Epoch. If not specified, reading starts from the oldest event.')
+    .option('-b, --before <before>', 'Timestamp until which events are requested, in nanoseconds since the Epoch. If not specified, reads until no newer events available.')
+    .requiredOption('-k, --key <privateKeyFile>', 'private key file, used for building authorization token')
+    .option('-m, --max-event-count <maxEventCount>', 'maximum number of events to return per request', '500')
 //    .option('-n, --newest', 'instruct to return newest events in case that number of events returned is limited by --max-event-count')
     .option('-x, --max-rounds <maxRounds>', 'maximum number of requests to send in order to get all events between --after and --before, or -1 for unlimited / until all retrieved', '1')
-    .option('-r, --max-retries <maxRetries>', 'maximum number of retries if request fails', '1')
-    .option('-o, --output <filePath>', 'file for writing events received from the server')
+    .option('-r, --max-retries <maxRetries>', 'maximum number of retries if a request fails', '1')
+    .option('-o, --output <filePath>', 'File for writing events received from the server. If not specified, writes to stdout.')
     .option('-d, --debug', 'output debug info (default: no debug output)')
     .parse(process.argv);
 
