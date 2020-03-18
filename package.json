@@ -1,6 +1,6 @@
 {
   "name": "@10duke/event-data-reader-cli",
-  "version": "0.0.1-SNAPSHOT.1",
+  "version": "1.0.0",
   "description": "Command line tool for reading event data from 10Duke Event Data service",
   "main": "./lib/index.js",
   "bin": {
@@ -26,7 +26,7 @@
     "Event Data",
     "cli"
   ],
-  "author": "jarkko",
+  "author": "10Duke",
   "license": "ISC",
   "dependencies": {
     "@types/bent": "^7.0.1",
